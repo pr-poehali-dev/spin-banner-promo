@@ -426,39 +426,39 @@ export default function Index() {
 
             {/* CTA */}
             {"cta" in card && card.cta && (
-              <a
-                href={card.ctaUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 8,
-                  padding: "14px 28px",
-                  borderRadius: 16,
-                  background: ACCENT,
-                  color: "#fff",
-                  fontFamily: "Montserrat, sans-serif",
-                  fontSize: 15,
-                  fontWeight: 700,
-                  textDecoration: "none",
-                  letterSpacing: "0.02em",
-                  boxShadow: `0 8px 32px rgba(232,0,28,0.4)`,
-                  alignSelf: "flex-start",
-                  transition: "transform 0.15s, box-shadow 0.15s",
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.transform = "scale(1.04)";
-                  (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 12px 40px rgba(232,0,28,0.55)";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.transform = "scale(1)";
-                  (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 8px 32px rgba(232,0,28,0.4)";
-                }}
-              >
-                {card.cta}
-                <Icon name="ArrowRight" size={16} />
-              </a>
+              <div style={{ position: "relative", alignSelf: "flex-start" }}>
+                {/* Flash ring */}
+                <div className="cta-flash-ring" />
+                <a
+                  href={card.ctaUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="cta-btn"
+                  style={{
+                    position: "relative",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 8,
+                    padding: "14px 28px",
+                    borderRadius: 16,
+                    background: ACCENT,
+                    color: "#fff",
+                    fontFamily: "Montserrat, sans-serif",
+                    fontSize: 15,
+                    fontWeight: 700,
+                    textDecoration: "none",
+                    letterSpacing: "0.02em",
+                    boxShadow: `0 8px 32px rgba(232,0,28,0.4)`,
+                    overflow: "hidden",
+                    zIndex: 1,
+                  }}
+                >
+                  {/* Shine sweep */}
+                  <span className="cta-shine" />
+                  {card.cta}
+                  <Icon name="ArrowRight" size={16} />
+                </a>
+              </div>
             )}
           </div>
 
@@ -554,6 +554,61 @@ export default function Index() {
         @keyframes progressBar {
           from { width: 0% }
           to { width: 100% }
+        }
+
+        /* Flash ring — pulse around button */
+        .cta-flash-ring {
+          position: absolute;
+          inset: -4px;
+          border-radius: 20px;
+          border: 2px solid rgba(232,0,28,0.7);
+          animation: flashRing 1.6s ease-out infinite;
+          pointer-events: none;
+          z-index: 0;
+        }
+        @keyframes flashRing {
+          0%   { transform: scale(1);    opacity: 0.9; }
+          60%  { transform: scale(1.12); opacity: 0; }
+          100% { transform: scale(1.12); opacity: 0; }
+        }
+
+        /* Shine sweep across button */
+        .cta-shine {
+          position: absolute;
+          top: 0;
+          left: -75%;
+          width: 50%;
+          height: 100%;
+          background: linear-gradient(
+            120deg,
+            transparent 0%,
+            rgba(255,255,255,0.35) 50%,
+            transparent 100%
+          );
+          animation: shineSweep 2.2s ease-in-out infinite;
+          pointer-events: none;
+          border-radius: inherit;
+        }
+        @keyframes shineSweep {
+          0%   { left: -75%; opacity: 0; }
+          10%  { opacity: 1; }
+          50%  { left: 130%; opacity: 1; }
+          51%  { opacity: 0; }
+          100% { left: 130%; opacity: 0; }
+        }
+
+        /* Subtle scale pulse on button */
+        .cta-btn {
+          animation: ctaPulse 2.2s ease-in-out infinite;
+        }
+        @keyframes ctaPulse {
+          0%,100% { transform: scale(1);    box-shadow: 0 8px 32px rgba(232,0,28,0.4); }
+          50%      { transform: scale(1.03); box-shadow: 0 12px 44px rgba(232,0,28,0.6); }
+        }
+        .cta-btn:hover {
+          animation: none;
+          transform: scale(1.05) !important;
+          box-shadow: 0 14px 48px rgba(232,0,28,0.65) !important;
         }
       `}</style>
     </div>
