@@ -110,7 +110,31 @@ export default function Index() {
       className="min-h-screen flex flex-col items-center justify-center p-4"
       style={{ background: BG_PAGE }}
     >
-      {/* Header */}
+      {/* Main title */}
+      <div style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(-18px)",
+        transition: "opacity 0.55s ease, transform 0.55s ease",
+        marginBottom: 28,
+        textAlign: "center",
+        maxWidth: 640,
+      }}>
+        <h2 style={{
+          fontFamily: "Oswald, sans-serif",
+          fontSize: "clamp(24px, 5vw, 38px)",
+          fontWeight: 700,
+          color: "#fff",
+          lineHeight: 1.15,
+          textTransform: "uppercase",
+          letterSpacing: "0.01em",
+          margin: "0 0 0 0",
+        }}>
+          Специально для тех,{" "}
+          <span style={{ color: ACCENT }}>кому мешает боль в спине</span>
+        </h2>
+      </div>
+
+      {/* Header badge */}
       <div style={{
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0)" : "translateY(-14px)",
